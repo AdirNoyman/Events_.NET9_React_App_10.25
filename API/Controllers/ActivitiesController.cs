@@ -8,9 +8,9 @@ namespace API.Controllers
     public class ActivitiesController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> GetActivities()
+        public async Task<ActionResult<List<Activity>>> GetActivities(CancellationToken ct)
         {
-            return await Mediator.Send(new GetActivitiesList.Query());
+            return await Mediator.Send(new GetActivitiesList.Query(), ct);
         }
 
         [HttpGet("{id}")]
@@ -32,6 +32,14 @@ namespace API.Controllers
 
             return NoContent();
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteActivity(string id)
+        {
+            await Mediator.Send(new DeleteActivity.Command { Id = id });
+
+            return Ok();
         }
     }
 }

@@ -1,4 +1,6 @@
+using System.Reflection;
 using Application.ActivitiesFeature.Queries;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -19,7 +21,7 @@ builder.Services.AddCors(opt =>
     });
 });
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetActivitiesList.Handler>());
-
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 
