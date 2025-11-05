@@ -6,6 +6,9 @@ import ActivitiesDashboard from '../../features/activities/dashboard/ActivitiesD
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<
+    Activity | undefined
+  >(undefined);
 
   useEffect(() => {
     axios
@@ -18,12 +21,28 @@ function App() {
       });
   }, []);
 
+  const handleSelectActivity = (id: string) => {
+    const activity = activities.find((a) => a.id === id);
+    if (!activity) return;
+    setSelectedActivity(activity);
+  };
+
+  const handleCancelSelectActivity = () => {
+    setSelectedActivity(undefined);
+  };
+
   return (
-    <Box sx={{ bgcolor: "#eee" }}>
+    <Box sx={{ bgcolor: '#eee' }}>
       <CssBaseline />
       <NavBar />
       <Container maxWidth='xl' sx={{ mt: 3 }}>
-        <ActivitiesDashboard activities={activities} />
+        <ActivitiesDashboard
+          activities={activities}
+          selectActivity={handleSelectActivity}
+          cancelSelectActivity={handleCancelSelectActivity}
+          selectedActivity={selectedActivity}
+          
+        />
       </Container>
     </Box>
   );

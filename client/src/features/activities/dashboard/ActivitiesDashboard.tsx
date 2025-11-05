@@ -4,16 +4,19 @@ import ActivityDetails from '../details/ActivityDetails';
 
 type Props = {
   activities: Activity[];
+  selectedActivity?: Activity;
+  selectActivity: (id: string) => void;
+  cancelSelectActivity: () => void;
 };
 
-const ActivitiesDashboard = ({ activities }: Props) => {
+const ActivitiesDashboard = ({ activities, selectActivity, selectedActivity,cancelSelectActivity }: Props) => {
   return (
     <Grid container spacing={3}>
       <Grid size={7}>
-        <ActivitiesList activities={activities} />
+        <ActivitiesList activities={activities} selectActivity={selectActivity} cancelSelectActivity={cancelSelectActivity} />
       </Grid>
       <Grid size={5}>
-        {activities[4] && <ActivityDetails activity={activities[4]} />}
+        {selectedActivity && <ActivityDetails activity={selectedActivity} cancelSelectActivity={cancelSelectActivity}/>}
       </Grid>
     </Grid>
   );
