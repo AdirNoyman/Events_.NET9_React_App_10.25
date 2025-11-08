@@ -1,11 +1,23 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+} from '@mui/material';
 
 type Props = {
   activity: Activity;
   cancelSelectActivity: () => void;
+  openForm: (id: string) => void;
 };
 
-const ActivityDetails = ({ activity, cancelSelectActivity }: Props) => {
+const ActivityDetails = ({
+  activity,
+  cancelSelectActivity,
+  openForm,
+}: Props) => {
   return (
     <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
       <CardMedia
@@ -13,19 +25,19 @@ const ActivityDetails = ({ activity, cancelSelectActivity }: Props) => {
         src={`/images/categoryImages/${activity.category}.jpg`}
       />
       <CardContent>
-        <Typography variant='h5'>
-            {activity.title}
+        <Typography variant='h5'>{activity.title}</Typography>
+        <Typography variant='subtitle1' fontWeight='light'>
+          {activity.date}
         </Typography>
-         <Typography variant='subtitle1' fontWeight='light'>
-            {activity.date}
-        </Typography>
-         <Typography variant='body1'>
-            {activity.description}
-        </Typography>
+        <Typography variant='body1'>{activity.description}</Typography>
       </CardContent>
       <CardActions>
-        <Button color='primary'>Edit</Button>
-        <Button color='inherit' onClick={cancelSelectActivity}>Cancel</Button>
+        <Button color='primary' onClick={() => openForm(activity.id)}>
+          Edit
+        </Button>
+        <Button color='inherit' onClick={cancelSelectActivity}>
+          Cancel
+        </Button>
       </CardActions>
     </Card>
   );

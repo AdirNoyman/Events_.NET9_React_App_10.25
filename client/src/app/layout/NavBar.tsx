@@ -6,14 +6,20 @@ import Button from '@mui/material/Button';
 import { Container, MenuItem } from '@mui/material';
 import { Nightlife } from '@mui/icons-material';
 
-export default function NavBar() {
+type Props = {
+  openForm: () => void;
+  editMode: boolean;
+  clearActivity: () => void;
+};
+
+export default function NavBar({ openForm, editMode, clearActivity }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position='static'
         sx={{
           backgroundImage:
-            'linear-gradient(to right, #580ab0 0%, #6244cf 30%, #bb5ee0 89%)',
+            'linear-gradient(to right, #4d059f 0%, #694bd5 30%, #9956cc 58%)',
         }}
       >
         <Container maxWidth='xl'>
@@ -57,7 +63,16 @@ export default function NavBar() {
                 List of events
               </MenuItem>
             </Box>
-            <Button color='warning' size='large' variant='contained'>
+            <Button
+              color='warning'
+              size='large'
+              variant='contained'
+              onClick={() => {
+                openForm();
+                clearActivity();
+              }}
+              disabled={editMode}
+            >
               Create Event
             </Button>
           </Toolbar>
