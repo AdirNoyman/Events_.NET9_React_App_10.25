@@ -19,7 +19,7 @@ export default function NavBar({ openForm, editMode, clearActivity }: Props) {
         position='static'
         sx={{
           backgroundImage:
-            'linear-gradient(to right, #4d059f 0%, #694bd5 30%, #9956cc 58%)',
+            'linear-gradient(to right, #000 0%, #4720d3 30%, #6813a9 58%)',
         }}
       >
         <Container maxWidth='xl'>
