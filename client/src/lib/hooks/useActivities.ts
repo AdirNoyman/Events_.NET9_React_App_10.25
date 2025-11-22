@@ -1,8 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import agent from '../api/agent';
 
 // React Query will handle the data fetching and caching and state management
 export const useActivities = () => {
+
+  const queryClient = useQueryClient()
+
   const { data: activities, isPending } = useQuery({
     queryKey: ['activities'],
     queryFn: async () => {
@@ -11,5 +14,18 @@ export const useActivities = () => {
     },
   });
 
-  return { activities, isPending };
+  const updateActivity = useMutation({
+    mutationFn: async (activity: Activity) => {
+      await agent.put('/activities', activity);
+    },
+
+    onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ['activities']
+        })
+    }
+
+  });
+
+  return { activities, isPending, updateActivity };
 };

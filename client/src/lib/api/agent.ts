@@ -6,7 +6,7 @@ const agent = axios.create({
 
 // Simulate network delay for development purposes
 const sleep = (delay: number) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(resolve, delay);
   });
 };
