@@ -3,9 +3,9 @@ import agent from '../api/agent';
 
 // React Query will handle the data fetching and caching and state management
 export const useActivities = () => {
+  const queryClient = useQueryClient();
 
-  const queryClient = useQueryClient()
-
+  // Get activities
   const { data: activities, isPending } = useQuery({
     queryKey: ['activities'],
     queryFn: async () => {
@@ -14,18 +14,44 @@ export const useActivities = () => {
     },
   });
 
+  // Update activity
   const updateActivity = useMutation({
     mutationFn: async (activity: Activity) => {
       await agent.put('/activities', activity);
     },
 
     onSuccess: async () => {
-        await queryClient.invalidateQueries({
-          queryKey: ['activities']
-        })
-    }
-
+      await queryClient.invalidateQueries({
+        queryKey: ['activities'],
+      });
+    },
   });
 
-  return { activities, isPending, updateActivity };
+  // Create activity
+  const createActivity = useMutation({
+    mutationFn: async (activity: Activity) => {
+      await agent.post('/activities', activity);
+    },
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['activities'],
+      });
+    },
+  });
+
+  // Delete Activity
+   const deleteActivity = useMutation({
+    mutationFn: async (id: string) => {
+      await agent.delete(`/activities/${id}`);
+    },
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['activities'],
+      });
+    },
+  });
+
+  return { activities, isPending, updateActivity, createActivity, deleteActivity };
 };

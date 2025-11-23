@@ -34,14 +34,6 @@ function App() {
     setEditMode(false);
   };
 
-  const handleDeleteActivity = (id: string) => {
-    // setActivities(activities.filter((a) => a.id !== id));
-    // if (selectedActivity?.id === id) {
-    //   handleCancelSelectActivity();
-    // }
-    console.log(id);
-  };
-
   return (
     <Box sx={{ bgcolor: '#eee', minHeight: '100vh' }}>
       <CssBaseline />
@@ -62,7 +54,6 @@ function App() {
             editMode={editMode}
             openForm={handleOpenForm}
             closeForm={handleCloseForm}
-            deleteActivity={handleDeleteActivity}
           />
         )}
       </Container>

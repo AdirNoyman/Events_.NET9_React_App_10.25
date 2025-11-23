@@ -6,18 +6,25 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
+import { useActivities } from '../../../lib/hooks/useActivities';
 
 type Props = {
-  activity: Activity;
+  selectedActivity: Activity;
   cancelSelectActivity: () => void;
   openForm: (id: string) => void;
 };
 
 const ActivityDetails = ({
-  activity,
+  selectedActivity,
   cancelSelectActivity,
   openForm,
 }: Props) => {
+  const { activities } = useActivities();
+  const activity = activities?.find((x) => x.id == selectedActivity.id);
+
+  // If activity was not fond, do not try to display the event card
+  if (!activity) return;
+
   return (
     <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
       <CardMedia

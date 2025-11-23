@@ -8,7 +8,7 @@ type Props = {
 };
 
 const ActivityForm = ({ closeForm, activity }: Props) => {
-  const { updateActivity } = useActivities();
+  const { updateActivity, createActivity } = useActivities();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,6 +22,9 @@ const ActivityForm = ({ closeForm, activity }: Props) => {
     if (activity) {
       data.id = activity.id;
       await updateActivity.mutateAsync(data as unknown as Activity);
+      closeForm();
+    } else {
+      await createActivity.mutateAsync(data as unknown as Activity);
       closeForm();
     }
   };
@@ -56,7 +59,11 @@ const ActivityForm = ({ closeForm, activity }: Props) => {
           label='Date'
           name='date'
           type='date'
-          defaultValue={activity?.date}
+          defaultValue={
+            activity?.date
+              ? new Date(activity.date).toISOString().split('T')[0]
+              : new Date().toISOString().split('T')[0]
+          }
         />
         <TextField label='City' name='city' defaultValue={activity?.city} />
         <TextField label='Venue' name='venue' defaultValue={activity?.venue} />
@@ -64,7 +71,12 @@ const ActivityForm = ({ closeForm, activity }: Props) => {
           <Button color='inherit' onClick={closeForm}>
             Cancel
           </Button>
-          <Button color='success' type='submit' variant='contained' disabled={updateActivity.isPending}>
+          <Button
+            color='success'
+            type='submit'
+            variant='contained'
+            disabled={updateActivity.isPending || createActivity.isPending}
+          >
             Submit
           </Button>
         </Box>
