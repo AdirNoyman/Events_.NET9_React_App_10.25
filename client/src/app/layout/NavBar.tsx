@@ -6,13 +6,7 @@ import Button from '@mui/material/Button';
 import { Container, MenuItem } from '@mui/material';
 import { Nightlife } from '@mui/icons-material';
 
-type Props = {
-  openForm: () => void;
-  editMode: boolean;
-  clearActivity: () => void;
-};
-
-export default function NavBar({ openForm, editMode, clearActivity }: Props) {
+export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -39,6 +33,27 @@ export default function NavBar({ openForm, editMode, clearActivity }: Props) {
                   fontSize: '1.1rem',
                   textTransform: 'uppercase',
                   fontWeight: 'semi-bold',
+                  transition: 'all 0.3s ease',
+                  borderRadius: '4px',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    transform: 'translateY(-2px)',
+                    color: '#ee8045',
+                  },
+                  '&:active': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                    transform: 'translateY(0)',
+                    color: '#ee8045',
+                  },
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderBottom: '2px solid #ee8045',
+                    color: '#ee8045',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                    },
+                  },
                 }}
               >
                 About
@@ -48,6 +63,27 @@ export default function NavBar({ openForm, editMode, clearActivity }: Props) {
                   fontSize: '1.1rem',
                   textTransform: 'uppercase',
                   fontWeight: 'semi-bold',
+                  transition: 'all 0.3s ease',
+                  borderRadius: '4px',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    transform: 'translateY(-2px)',
+                    color: '#e8a079',
+                  },
+                  '&:active': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                    transform: 'translateY(0)',
+                    color: '#ee8045',
+                  },
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderBottom: '2px solid #ee8045',
+                    color: '#ee8045',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                    },
+                  },
                 }}
               >
                 Contact
@@ -58,6 +94,27 @@ export default function NavBar({ openForm, editMode, clearActivity }: Props) {
                   fontSize: '1.1rem',
                   textTransform: 'uppercase',
                   fontWeight: 'semi-bold',
+                  transition: 'all 0.3s ease',
+                  borderRadius: '4px',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    transform: 'translateY(-2px)',
+                    color: '#ee8045',
+                  },
+                  '&:active': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                    transform: 'translateY(0)',
+                    color: '#ee8045',
+                  },
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderBottom: '2px solid #ee8045',
+                    color: '#ee8045',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                    },
+                  },
                 }}
               >
                 List of events
@@ -67,11 +124,8 @@ export default function NavBar({ openForm, editMode, clearActivity }: Props) {
               color='warning'
               size='large'
               variant='contained'
-              onClick={() => {
-                openForm();
-                clearActivity();
-              }}
-              disabled={editMode}
+              onClick={() => {}}
+              // disabled={editMode}
             >
               Create Event
             </Button>

@@ -11,14 +11,10 @@ import { useActivities } from '../../../lib/hooks/useActivities';
 
 type Props = {
   activity: Activity;
-  selectActivity: (id: string) => void;
-  closeForm: () => void;
-  
 };
 
-const ActivityCard = ({ activity, selectActivity, closeForm }: Props) => {
-
-  const {deleteActivity} = useActivities()
+const ActivityCard = ({ activity }: Props) => {
+  const { deleteActivity } = useActivities();
 
   return (
     <Card>
@@ -37,29 +33,21 @@ const ActivityCard = ({ activity, selectActivity, closeForm }: Props) => {
       >
         <Chip label={activity.category} variant='outlined' />
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-           <Button
-          size='medium'
-          variant='contained'
-          onClick={() => {
-            selectActivity(activity.id);
-            closeForm();
-          }}
-        >
-          View
-        </Button>
-           <Button
-          size='medium' 
-          color='error'        
-          variant='contained'
-          disabled={deleteActivity.isPending}
-          onClick={() => {
-            deleteActivity.mutate(activity.id)
-          }}
-        >
-          Delete
-        </Button>
+          <Button size='medium' variant='contained' onClick={() => {}}>
+            View
+          </Button>
+          <Button
+            size='medium'
+            color='error'
+            variant='contained'
+            disabled={deleteActivity.isPending}
+            onClick={() => {
+              deleteActivity.mutate(activity.id);
+            }}
+          >
+            Delete
+          </Button>
         </Box>
-       
       </CardActions>
     </Card>
   );
