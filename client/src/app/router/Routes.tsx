@@ -1,31 +1,37 @@
-import { createBrowserRouter } from "react-router";
-import App from "../layout/App";
-import HomePage from "../../features/home/HomePage";
-import ActivitiesDashboard from "../../features/activities/dashboard/ActivitiesDashboard";
-import ActivityForm from "../../features/activities/form/ActivityForm";
+import { createBrowserRouter } from 'react-router';
+import App from '../layout/App';
+import HomePage from '../../features/home/HomePage';
+import ActivityForm from '../../features/activities/form/ActivityForm';
+import ActivityDetails from '../../features/activities/details/ActivityDetails';
+import ActivitiesDashboard from '../../features/activities/dashboard/ActivitiesDashboard';
 
 export const router = createBrowserRouter([
-
-    // All the app routes go here
-    {
-        // Root Route
-        path: '/',
-        element: <App />,
-        children: [
-            {
-                path: '',
-                element: <HomePage />
-            },
-             {
-                path: 'activities',
-                element: <ActivitiesDashboard />
-            },
-             {
-                path: 'createActivity',
-                element: <ActivityForm />
-            }
-        ]
-    }
-
-
-])
+  // All the app routes go here
+  {
+    // Root Route
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: '',
+        element: <HomePage />,
+      },
+      {
+        path: 'activities',
+        element: <ActivitiesDashboard />,
+      },
+      {
+        path: 'activities/:id',
+        element: <ActivityDetails />,
+      },
+      {
+        path: 'create-activity',
+        element: <ActivityForm key='create'/>,
+      },
+      {
+        path: 'edit-activity/:id',
+        element: <ActivityForm />,
+      },
+    ],
+  },
+]);

@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useActivities } from '../../../lib/hooks/useActivities';
+import { Link } from 'react-router';
 
 type Props = {
   activity: Activity;
@@ -33,7 +34,7 @@ const ActivityCard = ({ activity }: Props) => {
       >
         <Chip label={activity.category} variant='outlined' />
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-          <Button size='medium' variant='contained' onClick={() => {}}>
+          <Button size='medium' component={Link} to={`/activities/${activity.id}`} variant='contained' onClick={() => {}}>
             View
           </Button>
           <Button

@@ -2,16 +2,27 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import agent from '../api/agent';
 
 // React Query will handle the data fetching and caching and state management
-export const useActivities = () => {
+export const useActivities = (id?: string) => {
   const queryClient = useQueryClient();
 
-  // Get activities
+  // Get all activities
   const { data: activities, isPending } = useQuery({
     queryKey: ['activities'],
     queryFn: async () => {
       const response = await agent.get<Activity[]>('/activities');
       return response.data;
     },
+  });
+
+  // Get specific activity
+  const { data: activity, isLoading: isLoadingActivity } = useQuery({
+    queryKey: ['activities', id],
+    queryFn: async () => {
+      const response = await agent.get<Activity>(`/activities/${id}`);
+      return response.data;
+    },
+    // Execute this useQuery (for getting one specific activity) only if there was id passed by the client, thus preventing calling this query unnecessarily. the !!id cast the variable to bool
+    enabled: !!id
   });
 
   // Update activity
@@ -30,7 +41,9 @@ export const useActivities = () => {
   // Create activity
   const createActivity = useMutation({
     mutationFn: async (activity: Activity) => {
-      await agent.post('/activities', activity);
+     const response = await agent.post('/activities', activity);
+     // Return the id of the new activity that was created
+     return response.data;
     },
 
     onSuccess: async () => {
@@ -41,7 +54,7 @@ export const useActivities = () => {
   });
 
   // Delete Activity
-   const deleteActivity = useMutation({
+  const deleteActivity = useMutation({
     mutationFn: async (id: string) => {
       await agent.delete(`/activities/${id}`);
     },
@@ -53,5 +66,13 @@ export const useActivities = () => {
     },
   });
 
-  return { activities, isPending, updateActivity, createActivity, deleteActivity };
+  return {
+    activities,
+    isPending,
+    updateActivity,
+    createActivity,
+    deleteActivity,
+    activity,
+    isLoadingActivity,
+  };
 };

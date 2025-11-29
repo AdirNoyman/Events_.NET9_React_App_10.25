@@ -1,11 +1,15 @@
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import type { FormEvent } from 'react';
 import { useActivities } from '../../../lib/hooks/useActivities';
+import { useNavigate, useParams } from 'react-router';
 
 const ActivityForm = () => {
-  const { updateActivity, createActivity } = useActivities();
-  // TODO: change this...
-  const activity = {} as Activity;
+  window.scrollTo(0, 0);
+  // Get activity id from the url
+  const { id } = useParams();
+  const { updateActivity, createActivity, activity, isLoadingActivity } =
+    useActivities(id);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,15 +23,22 @@ const ActivityForm = () => {
     if (activity) {
       data.id = activity.id;
       await updateActivity.mutateAsync(data as unknown as Activity);
+      navigate(`/activities/${activity.id}`);
     } else {
-      await createActivity.mutateAsync(data as unknown as Activity);
+      createActivity.mutate(data as unknown as Activity, {
+        onSuccess: (id) => {
+          navigate(`/activities/${id}`);
+        },
+      });
     }
   };
+
+  if (isLoadingActivity) return <Typography>Loading Activity 🙄...</Typography>;
 
   return (
     <Paper sx={{ padding: 3, borderRadius: 3 }}>
       <Typography variant='h4' gutterBottom color='primary'>
-        Create activity
+        {activity ? 'Edit Event Details' : 'Create New Event'}
       </Typography>
       <Box
         component='form'
@@ -63,7 +74,15 @@ const ActivityForm = () => {
         <TextField label='City' name='city' defaultValue={activity?.city} />
         <TextField label='Venue' name='venue' defaultValue={activity?.venue} />
         <Box display='flex' justifyContent='end' gap={3}>
-          <Button color='inherit'>Cancel</Button>
+          <Button
+            type='button'
+            color='inherit'
+            onClick={() => {
+              navigate('/activities');
+            }}
+          >
+            Cancel
+          </Button>
           <Button
             color='success'
             type='submit'
