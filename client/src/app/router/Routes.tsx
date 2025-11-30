@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router';
 import App from '../layout/App';
 import HomePage from '../../features/home/HomePage';
 import ActivityForm from '../../features/activities/form/ActivityForm';
-import ActivityDetails from '../../features/activities/details/ActivityDetails';
 import ActivitiesDashboard from '../../features/activities/dashboard/ActivitiesDashboard';
+import ActivityDetailsPage from '../../features/activities/details/ActivityDetailsPage';
 
 export const router = createBrowserRouter([
   // All the app routes go here
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'activities/:id',
-        element: <ActivityDetails />,
+        element: <ActivityDetailsPage />,
       },
       {
         path: 'create-activity',
