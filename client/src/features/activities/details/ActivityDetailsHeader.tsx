@@ -1,8 +1,108 @@
+import { Card, Badge, CardMedia, Box, Typography, Button } from '@mui/material';
+import { Link } from 'react-router';
 
-const ActivityDetailsHeader = () => {
+type Props = {
+  activity: Activity;
+};
+
+export default function ActivityDetailsHeader({ activity }: Props) {
+  const isEventCancelled = false;
+  const isUserTheHostOfTheEvent = true;
+  const isUserAttendingTheEvent = true;
+  const isLoadingEventsList = false;
+
   return (
-    <div>ActivityDetailsHeader</div>
-  )
-}
+    <Card
+      sx={{
+        position: 'relative',
+        mb: 2,
+        backgroundColor: 'transparent',
+        overflow: 'hidden',
+      }}
+    >
+      {isEventCancelled && (
+        <Badge
+          sx={{ position: 'absolute', left: 40, top: 20, zIndex: 1000 }}
+          color='error'
+          badgeContent='Cancelled'
+        />
+      )}
+      <CardMedia
+        component='img'
+        height='300'
+        image={`/images/categoryImages/${activity.category}.jpg`}
+        alt={activity.category}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          color: 'white',
+          padding: 2,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          background:
+            'linear-gradient(to top, rgba(0, 0, 0, 1.0), transparent)',
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Text Section */}
+        <Box>
+          <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+            {activity.title}
+          </Typography>
+          <Typography variant='subtitle1'>
+            {' '}
+            {activity.date.toString().split('T')[0]} at{' '}
+            {activity.date.toString().split('T')[1].substring(0, 5)}
+          </Typography>
+          <Typography variant='subtitle2'>
+            Hosted by{' '}
+            <Link
+              to={`/profiles/username`}
+              style={{ color: 'white', fontWeight: 'bold' }}
+            >
+              Bob
+            </Link>
+          </Typography>
+        </Box>
 
-export default ActivityDetailsHeader
+        {/* Buttons aligned to the right */}
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {isUserTheHostOfTheEvent ? (
+            <>
+              <Button
+                variant='contained'
+                color={isEventCancelled ? 'success' : 'error'}
+                onClick={() => {}}
+              >
+                {isEventCancelled ? 'Re-activate Activity' : 'Cancel Activity'}
+              </Button>
+              <Button
+                variant='contained'
+                color='primary'
+                component={Link}
+                to={`/manage/activityId`}
+                disabled={isEventCancelled}
+              >
+                Manage Event
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant='contained'
+              color={isUserAttendingTheEvent ? 'primary' : 'info'}
+              onClick={() => {}}
+              disabled={isEventCancelled || isLoadingEventsList}
+            >
+              {isUserAttendingTheEvent ? 'Cancel Attendance' : 'Join Activity'}
+            </Button>
+          )}
+        </Box>
+      </Box>
+    </Card>
+  );
+}
