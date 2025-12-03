@@ -54,11 +54,7 @@ export default function ActivityDetailsHeader({ activity }: Props) {
           <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
             {activity.title}
           </Typography>
-          <Typography variant='subtitle1'>
-            {' '}
-            {activity.date.toString().split('T')[0]} at{' '}
-            {activity.date.toString().split('T')[1].substring(0, 5)}
-          </Typography>
+
           <Typography variant='subtitle2'>
             Hosted by{' '}
             <Link

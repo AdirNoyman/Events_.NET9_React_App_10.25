@@ -1,5 +1,6 @@
 import { CalendarToday, Info, Place } from '@mui/icons-material';
 import { Divider, Grid, Paper, Typography } from '@mui/material';
+import { formatDateTime } from '../../../lib/util/util';
 
 type Props = {
   activity: Activity;
@@ -23,8 +24,7 @@ export default function ActivityDetailsInfo({ activity }: Props) {
         </Grid>
         <Grid size={11}>
           <Typography>
-            {activity.date.toString().split('T')[0]} at{' '}
-            {activity.date.toString().split('T')[1].substring(0, 5)}
+             {formatDateTime(activity.date).date} at {formatDateTime(activity.date).time}
           </Typography>
         </Grid>
       </Grid>
