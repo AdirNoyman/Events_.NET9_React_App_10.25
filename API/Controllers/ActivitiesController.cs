@@ -2,6 +2,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Application.ActivitiesFeature.Queries;
 using Application.ActivitiesFeature.Commands;
+using Application.ActivitiesFeature.DTOs;
 
 namespace API.Controllers
 {
@@ -20,9 +21,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> CreateActivity(Activity activity)
+        public async Task<ActionResult<string>> CreateActivity(CreateActivityDTO activityDTO)
         {
-            return await Mediator.Send(new CreateActivity.Command { Activity = activity });
+            return await Mediator.Send(new CreateActivity.Command { NewActivityDTO = activityDTO });
         }
 
         [HttpPut]
